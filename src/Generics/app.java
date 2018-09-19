@@ -41,6 +41,7 @@ public class app {
         for (Iterator<String> itemItr = list2.iterator(); itemItr.hasNext(); )
             System.out.println(itemItr.next());
 
+        // compiler will replace <> on the right side with correct type
         List<String> listG = new LinkedList<>();
         listG.add("First");
         listG.add("Second");
