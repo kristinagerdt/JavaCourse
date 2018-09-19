@@ -3,18 +3,18 @@ package Array;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class Array implements Iterable {
+public class ObjectArray implements Iterable {
 
-    private int[] arr;
+    private Object[] elementsArr;
     private int size;
     private static final int DEFAULT_CAPACITY = 10;
 
-    Array() {
-        arr = new int[DEFAULT_CAPACITY];
+    ObjectArray() {
+        elementsArr = new Object[DEFAULT_CAPACITY];
     }
 
-    Array(int capacity) {
-        arr = new int[capacity];
+    ObjectArray(int capacity) {
+        elementsArr = new Object[capacity];
     }
 
     public int getSize() {
@@ -25,76 +25,76 @@ public class Array implements Iterable {
         return size == 0;
     }
 
-    public int indexOf(int number) {
+    public int indexOf(Object element) {
         for (int i = 0; i < size; i++) {
-            if (arr[i] == number) {
+            if (elementsArr[i].equals(element)) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int lastIndexOf(int number) {
+    public int lastIndexOf(Object element) {
         for (int i = size - 1; i >= 0; i--) {
-            if (arr[i] == number) {
+            if (elementsArr[i].equals(element)) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int get(int index) {
+    public Object get(int index) {
         if (rangeCheck(index)) {
-            return arr[index];
+            return elementsArr[index];
         }
         return -1;
     }
 
-    public int set(int index, int number) {
-        int oldValue = -1;
+    public Object set(int index, Object element) {
+        Object oldValue = null;
         if (rangeCheck(index)) {
-            oldValue = arr[index];
-            arr[index] = number;
+            oldValue = elementsArr[index];
+            elementsArr[index] = element;
         }
         return oldValue;
     }
 
-    public boolean add(int number) {
+    public boolean add(Object element) {
         ensureCapacity(size + 1);
-        arr[size] = number;
+        elementsArr[size] = element;
         size++;
         return true;
     }
 
-    public boolean addAtPosition(int index, int number) {
+    public boolean addAtPosition(int index, Object element) {
         if (index >= size) {
             return false;
         }
         ensureCapacity(size + 1);
-        copyArray(arr, index, arr, index + 1, size - index);
-        arr[index] = number;
+        copyArray(elementsArr, index, elementsArr, index + 1, size - index);
+        elementsArr[index] = element;
         size++;
         return true;
     }
 
-    public boolean addAll(int arrToAdd[]) {
+    public boolean addAll(Object[] arrToAdd) {
         ensureCapacity(size + arrToAdd.length);
-        copyArray(arrToAdd, 0, arr, size, arrToAdd.length);
+        copyArray(arrToAdd, 0, elementsArr, size, arrToAdd.length);
         size += arrToAdd.length;
         return true;
     }
 
-    public boolean addAll(int index, int arrToAdd[]) {
+    public boolean addAll(int index, Object[] arrToAdd) {
         if (index > size || index < 0) {
             return false;
         }
         ensureCapacity(size + arrToAdd.length);
-//        how much array needs to grow
+//        how much the array needs to grow
         int step = size - index;
 //        if step is bigger than 0, than index is between 0 and size-1, so we need to copy existing array
         if (step > 0) {
-            copyArray(arr, index, arr, index + arrToAdd.length, step);
-            copyArray(arrToAdd, 0, arr, index, arr.length);
+            copyArray(elementsArr, index, elementsArr, index + arrToAdd.length, step);
+            copyArray(arrToAdd, 0, elementsArr, index, elementsArr.length);
             size += arrToAdd.length;
         } else {
             addAll(arrToAdd);
@@ -102,8 +102,8 @@ public class Array implements Iterable {
         return true;
     }
 
-    public boolean remove(int number) {
-        int foundIndex = indexOf(number);
+    public boolean remove(Object element) {
+        int foundIndex = indexOf(element);
         if (foundIndex == -1) {
             return false;
         }
@@ -111,19 +111,19 @@ public class Array implements Iterable {
         return true;
     }
 
-    public int removeByIndex(int index) {
+    public Object removeByIndex(int index) {
         if(!rangeCheck(index)){
-            return -1;
+            return null;
         }
-        int oldValue = arr[index];
-        copyArray(arr, index + 1, arr, index, size - index);
+        Object oldValue = elementsArr[index];
+        copyArray(elementsArr, index + 1, elementsArr, index, size - index);
         size--;
         return oldValue;
     }
 
     public boolean removeRange(int fromIndex, int toIndex){
         int step = size - toIndex;
-        copyArray(arr, toIndex, arr, fromIndex, step);
+        copyArray(elementsArr, toIndex, elementsArr, fromIndex, step);
         if(fromIndex < 0 || fromIndex >= size || toIndex > size || toIndex < fromIndex){
             return false;
         }
@@ -133,27 +133,27 @@ public class Array implements Iterable {
 
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity - arr.length > 0)
+        if (minCapacity - elementsArr.length > 0)
             resizeCapacity(minCapacity);
     }
 
     private void resizeCapacity(int minCapacity) {
-        int oldCapacity = arr.length;
+        int oldCapacity = elementsArr.length;
         int newCapacity = oldCapacity + (oldCapacity * 2);
         if (newCapacity - minCapacity < 0)
             newCapacity = minCapacity;
-        arr = copyArray(arr, newCapacity);
+        elementsArr = copyArray(elementsArr, newCapacity);
     }
 
-    private int[] copyArray(int[] elementsArr, int newSize) {
-        int[] newArr = new int[newSize];
+    private Object[] copyArray(Object[] elementsArr, int newSize) {
+        Object[] newArr = new Object[newSize];
         for (int i = 0; i < size; i++) {
             newArr[i] = elementsArr[i];
         }
         return newArr;
     }
 
-    private void copyArray(int[] src, int srcPos, int[] dest, int destPos, int length) {
+    private void copyArray(Object[] src, int srcPos, Object[] dest, int destPos, int length) {
         if (Arrays.equals(src, dest)) {
             src = copyArray(src, src.length);
         }
@@ -174,12 +174,12 @@ public class Array implements Iterable {
 
     public void print() {
         for (int i = 0; i < size; i++) {
-            System.out.println(arr[i]);
+            System.out.println(elementsArr[i]);
         }
     }
 
     @Override
     public Iterator iterator() {
-        return new ArrayIterator(arr, size);
+        return new ObjectArrayIterator(elementsArr, size);
     }
 }
