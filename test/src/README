@@ -1,0 +1,13 @@
+In order to run test under Intellij you need:
+
+1. Got to File -> Project Structure.. -> Modules
+    Right click on test folder and chose "Tests"
+
+2. Go to test/src/Stream/Stream_Api/HomeWork -> StreamHWTest
+    Move your cursor to @Test annotation and click on it.
+    Press ALT + ENTER and chose in context menu Add 'JUnit 4.2' to classpath
+
+    After it you shouldn't see any errors on the page. Anyway, if it is not a case you have to do following:
+    Read error description and try to find the answer in google. Try to ask somebody for your group about your error,
+    maybe somebody has resolved it already. Try to google again. Only in case, if you did all steps and google and
+    your teammates didn't help you, write me in skype, and i will try to find time to help you.
