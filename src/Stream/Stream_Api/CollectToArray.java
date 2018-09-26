@@ -1,8 +1,6 @@
 package Stream.Stream_Api;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -34,13 +32,13 @@ public class CollectToArray {
         double average = numbers.stream().collect(Collectors.averagingInt((p) -> p - 1));
         System.out.println("average = " + average); // напечатает average = 1.5
 
-//        // Прибавить к числам 3 и получить статистику
-//        IntSummaryStatistics statistics = numbers.stream().collect(Collectors.summarizingInt((p) -> p + 3));
-//        System.out.println("statistics = " + statistics); // напечатает statistics = IntSummaryStatistics{count=4, sum=22, min=4, average=5.500000, max=7}
-//
-//        // Получить сумму четных чисел через IntSummaryStatistics
-//        long sumEven = numbers.stream().collect(Collectors.summarizingInt((p) -> p % 2 == 0 ? p : 0)).getSum();
-//        System.out.println("sumEven = " + sumEven); // напечатает sumEven = 6
+        // Прибавить к числам 3 и получить статистику
+        IntSummaryStatistics statistics = numbers.stream().collect(Collectors.summarizingInt((p) -> p + 3));
+        System.out.println("statistics = " + statistics); // напечатает statistics = IntSummaryStatistics{count=4, sum=22, min=4, average=5.500000, max=7}
+
+        // Получить сумму четных чисел через IntSummaryStatistics
+        long sumEven = numbers.stream().collect(Collectors.summarizingInt((p) -> p % 2 == 0 ? p : 0)).getSum();
+        System.out.println("sumEven = " + sumEven); // напечатает sumEven = 6
 
         // Разделить числа на четные и нечетные
         Map<Boolean, List<Integer>> parts = numbers.stream().collect(Collectors.partitioningBy((p) -> p % 2 == 0));
