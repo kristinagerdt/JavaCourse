@@ -60,7 +60,12 @@ public class Map {
 
         Collection<String> collection = Arrays.asList("1,2,0", "4,5");
         // получить сумму всех числовые значения, которые хранятся через запятую в collection
-        int sum = collection.stream().flatMapToInt((p) -> Arrays.asList(p.split(",")).stream().mapToInt(Integer::parseInt)).sum();
+        int sum = collection
+                .stream()
+                .flatMapToInt((p) -> Arrays.asList(p.split(","))
+                        .stream()
+                        .mapToInt(Integer::parseInt))
+                .sum();
         System.out.println("sum = " + sum); // напечатает sum = 12
     }
 }

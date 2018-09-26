@@ -40,7 +40,10 @@ public class ForEachAndPeek {
         System.out.println("peek2 = " + peek); // напечатает peek2 = [A1, A2, A3, A1]
 
         Collection<StringBuilder> list = Arrays.asList(new StringBuilder("a1"), new StringBuilder("a2"), new StringBuilder("a3"));
-        List<StringBuilder> newList = list.stream().peek((p) -> p.append("_new")).collect(Collectors.toList());
+        List<StringBuilder> newList = list
+                .stream()
+                .peek((p) -> p.append("_new"))
+                .collect(Collectors.toList());
         System.out.println("newList = " + newList); // напечатает newList = [a1_new, a2_new, a3_new]
     }
 }

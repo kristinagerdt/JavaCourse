@@ -25,46 +25,71 @@ public class CollectToArray {
         Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4);
 
         // Получить сумму нечетных чисел
-        long sumOdd = numbers.stream().collect(Collectors.summingInt(((p) -> p % 2 == 1 ? p : 0)));
+        long sumOdd = numbers
+                .stream()
+                .collect(Collectors.summingInt(((p) -> p % 2 == 1 ? p : 0)));
         System.out.println("sumOdd = " + sumOdd); // напечатает sumEven = 4
 
         // Вычесть у каждого элемента 1 и получить среднее
-        double average = numbers.stream().collect(Collectors.averagingInt((p) -> p - 1));
+        double average = numbers
+                .stream()
+                .collect(Collectors.averagingInt((p) -> p - 1));
         System.out.println("average = " + average); // напечатает average = 1.5
 
         // Прибавить к числам 3 и получить статистику
-        IntSummaryStatistics statistics = numbers.stream().collect(Collectors.summarizingInt((p) -> p + 3));
+        IntSummaryStatistics statistics = numbers
+                .stream()
+                .collect(Collectors.summarizingInt((p) -> p + 3));
         System.out.println("statistics = " + statistics); // напечатает statistics = IntSummaryStatistics{count=4, sum=22, min=4, average=5.500000, max=7}
 
         // Получить сумму четных чисел через IntSummaryStatistics
-        long sumEven = numbers.stream().collect(Collectors.summarizingInt((p) -> p % 2 == 0 ? p : 0)).getSum();
+        long sumEven = numbers
+                .stream()
+                .collect(Collectors.summarizingInt((p) -> p % 2 == 0 ? p : 0))
+                .getSum();
         System.out.println("sumEven = " + sumEven); // напечатает sumEven = 6
 
         // Разделить числа на четные и нечетные
-        Map<Boolean, List<Integer>> parts = numbers.stream().collect(Collectors.partitioningBy((p) -> p % 2 == 0));
+        Map<Boolean, List<Integer>> parts = numbers
+                .stream()
+                .collect(Collectors.partitioningBy((p) -> p % 2 == 0));
         System.out.println("parts = " + parts); // напечатает parts = {false=[1, 3], true=[2, 4]}
 
         // ******** Работа со строками
         Collection<String> strings = Arrays.asList("a1", "b2", "c3", "a1");
 
         // Получение списка из коллекции строк без дубликатов
-        List<String> distinct = strings.stream().distinct().collect(Collectors.toList());
+        List<String> distinct = strings
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
         System.out.println("distinct = " + distinct); // напечатает distinct = [a1, b2, c3]
 
         // Получение массива уникальных значений из коллекции строк
-        String[] array = strings.stream().distinct().map(String::toUpperCase).toArray(String[]::new);
+        String[] array = strings
+                .stream()
+                .distinct()
+                .map(String::toUpperCase)
+                .toArray(String[]::new);
         System.out.println("array = " + Arrays.asList(array)); // напечатает array = [A1, B2, C3]
 
         // Объединить все элементы в одну строку через разделитель : и обернуть тегами <b> ... </b>
-        String join = strings.stream().collect(Collectors.joining(" : ", "<b> ", " </b>"));
+        String join = strings
+                .stream()
+                .collect(Collectors.joining(" : ", "<b> ", " </b>"));
         System.out.println("join = " + join); // напечатает <b> a1 : b2 : c3 : a1 </b>
 
         // Преобразовать в map, где первый символ ключ, второй символ значение
-        Map<String, String> map = strings.stream().distinct().collect(Collectors.toMap(p -> p.substring(0, 1), p -> p.substring(1, 2)));
+        Map<String, String> map = strings
+                .stream()
+                .distinct()
+                .collect(Collectors.toMap(p -> p.substring(0, 1), p -> p.substring(1, 2)));
         System.out.println("map = " + map); // напечатает map = {a=1, b=2, c=3}
 
         // Преобразовать в map, сгрупировав по первому символу строки
-        Map<String, List<String>> groups = strings.stream().collect(Collectors.groupingBy(p -> p.substring(0, 1)));
+        Map<String, List<String>> groups = strings
+                .stream()
+                .collect(Collectors.groupingBy(p -> p.substring(0, 1)));
         System.out.println("groups = " + groups); // напечатает groups = {a=[a1, a1], b=[b2], c=[c3]}
 
         List<String> names = Arrays.asList("peter", "anna", "mike");
@@ -74,7 +99,11 @@ public class CollectToArray {
                 .forEach((k, v) -> System.out.println(k + " " + v));// напечатает groups = 0 peter, 1 anna, 2 mike
 
         // Преобразовать в map, сгрупировав по первому символу строки и в качестве значения взять второй символ объединим через :
-        Map<String, String> groupJoin = strings.stream().collect(Collectors.groupingBy((p) -> p.substring(0, 1), Collectors.mapping((p) -> p.substring(1, 2), Collectors.joining(":"))));
+        Map<String, String> groupJoin = strings
+                .stream()
+                .collect(Collectors.groupingBy((p) -> p.substring(0, 1),
+                        Collectors.mapping((p) -> p.substring(1, 2),
+                                Collectors.joining(":"))));
         System.out.println("groupJoin = " + groupJoin); // напечатает groupJoin = groupJoin = {a=1/1, b=2, c=3}
 
         // Напишем собственный Collector, который будет выполнять объединение строк с помощью StringBuilder
@@ -84,7 +113,9 @@ public class CollectToArray {
                 (b1, b2) -> b1.append(b2).append(" , "), // метод соединения двух аккумуляторов при параллельном выполнении
                 StringBuilder::toString // метод выполняющися в самом конце
         );
-        String joinBuilder = strings.stream().collect(stringBuilderCollector);
+        String joinBuilder = strings
+                .stream()
+                .collect(stringBuilderCollector);
         System.out.println("joinBuilder = " + joinBuilder); // напечатает joinBuilder = a1 , b2 , c3 , a1 ,
 
         // Аналог Collector'а выше стилем JDK7 и ниже

@@ -13,7 +13,10 @@ public class Reduce {
         Collection<Integer> collection = Arrays.asList(1, 2, 3, 4, 2);
 
         // Вернуть сумму
-        Integer sum = collection.stream().reduce((s1, s2) -> s1 + s2).orElse(0); // через stream Api
+        Integer sum = collection
+                .stream()
+                .reduce((s1, s2) -> s1 + s2)
+                .orElse(0); // через stream Api
         Integer sumOld = 0; // по старому методу
         for (Integer i : collection) {
             sumOld += i;
