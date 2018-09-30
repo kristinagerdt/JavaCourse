@@ -2,10 +2,12 @@ package Stream.Stream_Api.HomeWork;
 
 import org.junit.Test;
 
-import java.util.*;
+import java.util.IntSummaryStatistics;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
@@ -234,8 +236,9 @@ public class StreamHWTest {
 
     @Test
     public void shouldBeEmptyStream(){
-        Stream<Integer> numberStream =null; //create empty stream
+        Stream<Integer> numberStream = null; //create empty stream
         assertNotNull(numberStream);
+        assertTrue(numberStream.count() == 0);
     }
 
     @Test
