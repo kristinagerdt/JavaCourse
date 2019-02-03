@@ -9,24 +9,20 @@ public class BinarySearch {
         System.out.println(val);
     }
 
-    public static Integer binarySearch(Integer[] arr, Integer value){
+    public static Integer binarySearch(Integer[] arr, Integer value) {
 
-        int left = 0;
-        int right = arr.length;
-
-        while(true){
+        for (int left = 0, right = arr.length - 1; left <= right; ) {
             int mid = left + (right - left) / 2;
 
-            if (arr[mid].equals(value)){
+            if (arr[mid].equals(value)) {
                 return mid;
             }
-            if (arr[mid] > value){
-                right = mid;
-            }
-            else{
-                left = mid;
+            if (arr[mid] > value) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
             }
         }
-
+        return -1;
     }
 }
